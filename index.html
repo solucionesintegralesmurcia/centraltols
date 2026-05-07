@@ -1,65 +1,726 @@
-// CAMBIA EL HTML DE LA TARJETA POR ESTE
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-container.innerHTML += `
-        
-<div class="bg-zinc-900 border border-zinc-800 rounded-3xl overflow-hidden hover:border-zinc-600 transition">
+<title>HUB CENTRAL</title>
 
-  <div class="h-52 bg-zinc-800 overflow-hidden">
+<script src="https://cdn.tailwindcss.com"></script>
 
-    <img
-      src="${card.image || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop'}"
-      class="w-full h-full object-cover"
-    />
+<style>
 
-  </div>
+body{
+    font-family: Arial, sans-serif;
+    background:#09090b;
+    color:white;
+    overflow-x:hidden;
+}
 
-  <div class="p-6">
+::-webkit-scrollbar{
+    width:8px;
+}
 
-    <div class="flex items-start justify-between">
+::-webkit-scrollbar-thumb{
+    background:#3f3f46;
+    border-radius:10px;
+}
 
-      <div>
+.sidebar-btn{
+    width:100%;
+    text-align:left;
+    padding:14px;
+    border-radius:18px;
+    background:#18181b;
+    transition:.2s;
+    margin-bottom:10px;
+}
 
-        <div class="text-4xl mb-4">
-          ${card.icon || "📦"}
+.sidebar-btn:hover{
+    background:#27272a;
+}
+
+.section-card{
+    background:#18181b;
+    border:1px solid #27272a;
+    border-radius:30px;
+    padding:28px;
+}
+
+.tool-card{
+    background:#09090b;
+    border:1px solid #27272a;
+    border-radius:24px;
+    overflow:hidden;
+    transition:.2s;
+}
+
+.tool-card:hover{
+    transform:translateY(-4px);
+    border-color:#52525b;
+}
+
+.input{
+    width:100%;
+    background:#18181b;
+    border:1px solid #3f3f46;
+    border-radius:18px;
+    padding:14px;
+    outline:none;
+    color:white;
+}
+
+.modal{
+    backdrop-filter: blur(8px);
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="flex min-h-screen">
+
+    <!-- SIDEBAR -->
+    <aside class="w-72 bg-zinc-900 border-r border-zinc-800 p-6 hidden md:flex flex-col">
+
+        <div>
+
+            <h1 class="text-3xl font-bold">
+                HUB CENTRAL
+            </h1>
+
+            <p class="text-zinc-400 mt-2 text-sm">
+                Centro de herramientas y proyectos
+            </p>
+
         </div>
 
-        <h3 class="text-2xl font-bold">
-          ${card.name}
-        </h3>
+        <div class="mt-10">
 
-        <p class="text-zinc-400 mt-3 leading-relaxed">
-          ${card.description}
-        </p>
+            <button onclick="scrollTopPage()" class="sidebar-btn">
+                🏠 Inicio
+            </button>
 
-      </div>
+            <button onclick="openSectionModal()" class="sidebar-btn">
+                ➕ Nueva sección
+            </button>
 
-      <button
-        onclick="deleteCard(${index})"
-        class="text-zinc-500 hover:text-red-500 text-xl"
-      >
-        🗑
-      </button>
+        </div>
 
-    </div>
+        <div id="sidebarSections" class="mt-6"></div>
 
-    <div class="mt-6 flex gap-3">
+        <div class="mt-auto text-zinc-500 text-xs">
+            HUB v3
+        </div>
 
-      <a
-        href="${card.url}"
-        target="_blank"
-        class="bg-white text-black px-5 py-2 rounded-2xl font-semibold hover:scale-105 transition"
-      >
-        Abrir
-      </a>
+    </aside>
 
-      <div class="bg-zinc-800 px-4 py-2 rounded-2xl text-sm flex items-center">
-        ${card.category}
-      </div>
+    <!-- MAIN -->
+    <main class="flex-1 p-6 md:p-10">
 
-    </div>
+        <!-- HEADER -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
 
-  </div>
+            <div>
+
+                <h2 class="text-5xl font-bold">
+                    Mi Ecosistema
+                </h2>
+
+                <p class="text-zinc-400 mt-3">
+                    Organiza herramientas, demos, clientes y webs desde un único panel.
+                </p>
+
+            </div>
+
+            <div class="flex gap-3">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Buscar..."
+                    class="input w-64"
+                />
+
+                <button
+                    onclick="openToolModal()"
+                    class="bg-white text-black px-6 py-3 rounded-2xl font-bold hover:scale-105 transition"
+                >
+                    + Añadir herramienta
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- SECTIONS -->
+        <div id="sectionsContainer" class="space-y-10"></div>
+
+    </main>
 
 </div>
 
-`;
+<!-- MODAL SECTION -->
+
+<div
+    id="sectionModal"
+    class="fixed inset-0 hidden items-center justify-center bg-black/70 z-50 modal"
+>
+
+    <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 w-[95%] max-w-md">
+
+        <div class="flex items-center justify-between mb-6">
+
+            <h3 class="text-2xl font-bold">
+                Nueva Sección
+            </h3>
+
+            <button onclick="closeSectionModal()">
+                ✕
+            </button>
+
+        </div>
+
+        <div class="space-y-4">
+
+            <input
+                type="text"
+                id="sectionName"
+                placeholder="Nombre sección"
+                class="input"
+            />
+
+            <button
+                onclick="addSection()"
+                class="w-full bg-white text-black py-3 rounded-2xl font-bold"
+            >
+                Crear Sección
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MODAL TOOL -->
+
+<div
+    id="toolModal"
+    class="fixed inset-0 hidden items-center justify-center bg-black/70 z-50 modal"
+>
+
+    <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 w-[95%] max-w-xl">
+
+        <div class="flex items-center justify-between mb-6">
+
+            <h3 class="text-2xl font-bold">
+                Añadir Herramienta
+            </h3>
+
+            <button onclick="closeToolModal()">
+                ✕
+            </button>
+
+        </div>
+
+        <div class="space-y-4">
+
+            <input
+                type="text"
+                id="toolName"
+                placeholder="Nombre"
+                class="input"
+            />
+
+            <input
+                type="text"
+                id="toolUrl"
+                placeholder="URL"
+                class="input"
+            />
+
+            <textarea
+                id="toolDescription"
+                placeholder="Descripción"
+                class="input h-28 resize-none"
+            ></textarea>
+
+            <select
+                id="toolSection"
+                class="input"
+            ></select>
+
+            <input
+                type="text"
+                id="toolIcon"
+                placeholder="Emoji/Icono"
+                class="input"
+            />
+
+            <input
+                type="file"
+                id="toolImage"
+                accept="image/*"
+                class="input"
+            />
+
+            <button
+                onclick="addTool()"
+                class="w-full bg-white text-black py-3 rounded-2xl font-bold"
+            >
+                Guardar Herramienta
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let sections = JSON.parse(
+    localStorage.getItem("hub_sections")
+) || [
+
+    {
+        id: Date.now(),
+        name: "Herramientas IA",
+        tools: []
+    },
+
+    {
+        id: Date.now()+1,
+        name: "Mis Webs",
+        tools: []
+    }
+
+];
+
+function saveData(){
+
+    localStorage.setItem(
+        "hub_sections",
+        JSON.stringify(sections)
+    );
+
+}
+
+function renderSidebar(){
+
+    const sidebar =
+        document.getElementById("sidebarSections");
+
+    sidebar.innerHTML = "";
+
+    sections.forEach(section=>{
+
+        sidebar.innerHTML += `
+
+            <button
+                onclick="scrollToSection('${section.id}')"
+                class="sidebar-btn"
+            >
+                📁 ${section.name}
+            </button>
+
+        `;
+
+    });
+
+}
+
+function renderSectionOptions(){
+
+    const select =
+        document.getElementById("toolSection");
+
+    select.innerHTML = "";
+
+    sections.forEach(section=>{
+
+        select.innerHTML += `
+            <option value="${section.id}">
+                ${section.name}
+            </option>
+        `;
+
+    });
+
+}
+
+function renderSections(){
+
+    const container =
+        document.getElementById("sectionsContainer");
+
+    const search =
+        document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase();
+
+    container.innerHTML = "";
+
+    sections.forEach(section=>{
+
+        let filteredTools =
+            section.tools.filter(tool=>{
+
+                return(
+                    tool.name.toLowerCase().includes(search)
+                    ||
+                    tool.description.toLowerCase().includes(search)
+                );
+
+            });
+
+        container.innerHTML += `
+
+            <section
+                id="section-${section.id}"
+                class="section-card"
+            >
+
+                <div class="flex items-center justify-between mb-8">
+
+                    <div>
+
+                        <h2 class="text-3xl font-bold">
+                            ${section.name}
+                        </h2>
+
+                        <p class="text-zinc-400 mt-2">
+                            ${filteredTools.length} herramientas
+                        </p>
+
+                    </div>
+
+                    <button
+                        onclick="deleteSection(${section.id})"
+                        class="bg-red-500/20 text-red-400 px-4 py-2 rounded-2xl"
+                    >
+                        Eliminar
+                    </button>
+
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+
+                    ${filteredTools.map((tool,index)=>`
+
+                        <div class="tool-card">
+
+                            <div class="h-52 bg-zinc-800 overflow-hidden">
+
+                                <img
+                                    src="${tool.image}"
+                                    class="w-full h-full object-cover"
+                                />
+
+                            </div>
+
+                            <div class="p-6">
+
+                                <div class="flex items-start justify-between">
+
+                                    <div>
+
+                                        <div class="text-4xl mb-4">
+                                            ${tool.icon}
+                                        </div>
+
+                                        <h3 class="text-2xl font-bold">
+                                            ${tool.name}
+                                        </h3>
+
+                                        <p class="text-zinc-400 mt-3">
+                                            ${tool.description}
+                                        </p>
+
+                                    </div>
+
+                                    <button
+                                        onclick="deleteTool(${section.id},${index})"
+                                        class="text-zinc-500 hover:text-red-500"
+                                    >
+                                        🗑
+                                    </button>
+
+                                </div>
+
+                                <a
+                                    href="${tool.url}"
+                                    target="_blank"
+                                    class="inline-block mt-6 bg-white text-black px-5 py-3 rounded-2xl font-bold hover:scale-105 transition"
+                                >
+                                    Abrir
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    `).join("")}
+
+                </div>
+
+            </section>
+
+        `;
+
+    });
+
+}
+
+function openSectionModal(){
+
+    document
+        .getElementById("sectionModal")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("sectionModal")
+        .classList.add("flex");
+
+}
+
+function closeSectionModal(){
+
+    document
+        .getElementById("sectionModal")
+        .classList.add("hidden");
+
+}
+
+function addSection(){
+
+    const name =
+        document.getElementById("sectionName").value;
+
+    if(!name) return;
+
+    sections.push({
+
+        id: Date.now(),
+        name,
+        tools: []
+
+    });
+
+    saveData();
+
+    renderSidebar();
+
+    renderSectionOptions();
+
+    renderSections();
+
+    closeSectionModal();
+
+    document.getElementById("sectionName").value="";
+
+}
+
+function deleteSection(id){
+
+    if(!confirm("Eliminar sección completa?")) return;
+
+    sections =
+        sections.filter(s=>s.id!==id);
+
+    saveData();
+
+    renderSidebar();
+
+    renderSectionOptions();
+
+    renderSections();
+
+}
+
+function openToolModal(){
+
+    document
+        .getElementById("toolModal")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("toolModal")
+        .classList.add("flex");
+
+}
+
+function closeToolModal(){
+
+    document
+        .getElementById("toolModal")
+        .classList.add("hidden");
+
+}
+
+function addTool(){
+
+    const name =
+        document.getElementById("toolName").value;
+
+    const url =
+        document.getElementById("toolUrl").value;
+
+    const description =
+        document.getElementById("toolDescription").value;
+
+    const sectionId =
+        Number(
+            document.getElementById("toolSection").value
+        );
+
+    const icon =
+        document.getElementById("toolIcon").value || "🚀";
+
+    const imageInput =
+        document.getElementById("toolImage");
+
+    if(!name || !url){
+
+        alert("Completa nombre y URL");
+
+        return;
+
+    }
+
+    const file =
+        imageInput.files[0];
+
+    if(file){
+
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+
+            saveTool(
+                name,
+                url,
+                description,
+                sectionId,
+                icon,
+                e.target.result
+            );
+
+        };
+
+        reader.readAsDataURL(file);
+
+    }else{
+
+        saveTool(
+            name,
+            url,
+            description,
+            sectionId,
+            icon,
+            "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"
+        );
+
+    }
+
+}
+
+function saveTool(
+    name,
+    url,
+    description,
+    sectionId,
+    icon,
+    image
+){
+
+    const section =
+        sections.find(
+            s=>s.id===sectionId
+        );
+
+    section.tools.unshift({
+
+        name,
+        url,
+        description,
+        icon,
+        image
+
+    });
+
+    saveData();
+
+    renderSections();
+
+    closeToolModal();
+
+    document.getElementById("toolName").value="";
+    document.getElementById("toolUrl").value="";
+    document.getElementById("toolDescription").value="";
+    document.getElementById("toolIcon").value="";
+    document.getElementById("toolImage").value="";
+
+}
+
+function deleteTool(sectionId,index){
+
+    if(!confirm("Eliminar herramienta?")) return;
+
+    const section =
+        sections.find(
+            s=>s.id===sectionId
+        );
+
+    section.tools.splice(index,1);
+
+    saveData();
+
+    renderSections();
+
+}
+
+function scrollToSection(id){
+
+    document
+        .getElementById(`section-${id}`)
+        .scrollIntoView({
+
+            behavior:"smooth"
+
+        });
+
+}
+
+function scrollTopPage(){
+
+    window.scrollTo({
+
+        top:0,
+        behavior:"smooth"
+
+    });
+
+}
+
+document
+    .getElementById("searchInput")
+    .addEventListener(
+        "input",
+        renderSections
+    );
+
+renderSidebar();
+
+renderSectionOptions();
+
+renderSections();
+
+</script>
+
+</body>
+</html>
