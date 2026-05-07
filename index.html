@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HUB Central</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #3f3f46;
+      border-radius: 10px;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+
+<body class="bg-zinc-950 text-white">
+
+  <div class="flex h-screen overflow-hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="w-72 bg-zinc-900 border-r border-zinc-800 p-6 hidden md:flex flex-col">
+
+      <div>
+        <h1 class="text-3xl font-bold">HUB Central</h1>
+        <p class="text-zinc-400 mt-2 text-sm">
+          Centro de control de herramientas y proyectos
+        </p>
+      </div>
+
+      <nav class="mt-10 space-y-3">
+
+        <button onclick="filterCategory('Todas')" class="menu-btn">
+          🏠 Inicio
+        </button>
+
+        <button onclick="filterCategory('Herramientas IA')" class="menu-btn">
+          🤖 Herramientas IA
+        </button>
+
+        <button onclick="filterCategory('Mis Webs')" class="menu-btn">
+          🌐 Mis Webs
+        </button>
+
+        <button onclick="filterCategory('Demos Clientes')" class="menu-btn">
+          🎨 Demos Clientes
+        </button>
+
+        <button onclick="filterCategory('Clientes')" class="menu-btn">
+          👨‍💼 Clientes
+        </button>
+
+        <button onclick="filterCategory('Proyectos')" class="menu-btn">
+          📦 Proyectos
+        </button>
+
+      </nav>
+
+      <div class="mt-auto text-xs text-zinc-500">
+        HUB v1
+      </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="flex-1 overflow-y-auto p-6 md:p-10">
+
+      <!-- HEADER -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+
+        <div>
+          <h2 class="text-4xl font-bold">
+            Tus Herramientas
+          </h2>
+
+          <p class="text-zinc-400 mt-2">
+            Organiza todas tus apps, webs y demos desde un único sitio.
+          </p>
+        </div>
+
+        <div class="flex gap-3">
+
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Buscar..."
+            class="bg-zinc-900 border border-zinc-700 rounded-2xl px-4 py-3 outline-none w-64"
+          />
+
+          <button
+            onclick="openModal()"
+            class="bg-white text-black px-5 py-3 rounded-2xl font-semibold hover:scale-105 transition"
+          >
+            + Añadir
+          </button>
+
+        </div>
+
+      </div>
+
+      <!-- STATS -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-10">
+
+        <div class="card-stat">
+          <div class="text-zinc-400">Herramientas</div>
+          <div class="text-4xl font-bold mt-2" id="toolsCount">0</div>
+        </div>
+
+        <div class="card-stat">
+          <div class="text-zinc-400">Categorías</div>
+          <div class="text-4xl font-bold mt-2" id="categoriesCount">0</div>
+        </div>
+
+        <div class="card-stat">
+          <div class="text-zinc-400">Total Tarjetas</div>
+          <div class="text-4xl font-bold mt-2" id="cardsCount">0</div>
+        </div>
+
+      </div>
+
+      <!-- CARDS -->
+      <div id="cardsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
+
+    </main>
+
+  </div>
+
+  <!-- MODAL -->
+  <div id="modal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
+
+    <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 w-[95%] max-w-lg">
+
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-2xl font-bold">Añadir Tarjeta</h3>
+
+        <button onclick="closeModal()" class="text-zinc-400 text-2xl">
+          ✕
+        </button>
+      </div>
+
+      <div class="space-y-4">
+
+        <input
+          id="name"
+          type="text"
+          placeholder="Nombre"
+          class="input"
+        />
+
+        <input
+          id="url"
+          type="text"
+          placeholder="URL"
+          class="input"
+        />
+
+        <textarea
+          id="description"
+          placeholder="Descripción"
+          class="input h-28 resize-none"
+        ></textarea>
+
+        <select id="category" class="input">
+
+          <option>Herramientas IA</option>
+          <option>Mis Webs</option>
+          <option>Demos Clientes</option>
+          <option>Clientes</option>
+          <option>Proyectos</option>
+
+        </select>
+
+        <input
+          id="icon"
+          type="text"
+          placeholder="Emoji/Icono"
+          class="input"
+        />
+
+        <button
+          onclick="addCard()"
+          class="w-full bg-white text-black py-3 rounded-2xl font-bold hover:scale-[1.02] transition"
+        >
+          Guardar Tarjeta
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    let currentCategory = "Todas";
+
+    let cards = JSON.parse(localStorage.getItem("hubCards")) || [
+
+      {
+        name: "CRM Dental",
+        url: "https://example.com",
+        description: "Demo CRM para clínicas dentales.",
+        category: "Demos Clientes",
+        icon: "🦷"
+      },
+
+      {
+        name: "Analizador SEO",
+        url: "https://example.com",
+        description: "Herramienta IA para analizar páginas web.",
+        category: "Herramientas IA",
+        icon: "🤖"
+      }
+
+    ];
+
+    function saveCards() {
+      localStorage.setItem("hubCards", JSON.stringify(cards));
+    }
+
+    function renderCards() {
+
+      const container = document.getElementById("cardsContainer");
+
+      const search = document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+      container.innerHTML = "";
+
+      let filtered = cards.filter(card => {
+
+        const matchesCategory =
+          currentCategory === "Todas" ||
+          card.category === currentCategory;
+
+        const matchesSearch =
+          card.name.toLowerCase().includes(search) ||
+          card.description.toLowerCase().includes(search);
+
+        return matchesCategory && matchesSearch;
+
+      });
+
+      filtered.forEach((card, index) => {
+
+        container.innerHTML += `
+        
+          <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 hover:border-zinc-600 transition">
+
+            <div class="flex items-start justify-between">
+
+              <div>
+
+                <div class="text-4xl mb-4">
+                  ${card.icon || "📦"}
+                </div>
+
+                <h3 class="text-2xl font-bold">
+                  ${card.name}
+                </h3>
+
+                <p class="text-zinc-400 mt-3 leading-relaxed">
+                  ${card.description}
+                </p>
+
+              </div>
+
+              <button
+                onclick="deleteCard(${index})"
+                class="text-zinc-500 hover:text-red-500 text-xl"
+              >
+                🗑
+              </button>
+
+            </div>
+
+            <div class="mt-6 flex gap-3">
+
+              <a
+                href="${card.url}"
+                target="_blank"
+                class="bg-white text-black px-5 py-2 rounded-2xl font-semibold hover:scale-105 transition"
+              >
+                Abrir
+              </a>
+
+              <div class="bg-zinc-800 px-4 py-2 rounded-2xl text-sm flex items-center">
+                ${card.category}
+              </div>
+
+            </div>
+
+          </div>
+
+        `;
+      });
+
+      updateStats();
+
+    }
+
+    function updateStats() {
+
+      document.getElementById("cardsCount").innerText = cards.length;
+
+      const categories = [...new Set(cards.map(c => c.category))];
+
+      document.getElementById("categoriesCount").innerText = categories.length;
+
+      document.getElementById("toolsCount").innerText =
+        cards.filter(c => c.category === "Herramientas IA").length;
+
+    }
+
+    function openModal() {
+      document.getElementById("modal").classList.remove("hidden");
+      document.getElementById("modal").classList.add("flex");
+    }
+
+    function closeModal() {
+      document.getElementById("modal").classList.add("hidden");
+    }
+
+    function addCard() {
+
+      const name = document.getElementById("name").value;
+      const url = document.getElementById("url").value;
+      const description = document.getElementById("description").value;
+      const category = document.getElementById("category").value;
+      const icon = document.getElementById("icon").value;
+
+      if (!name || !url) {
+        alert("Completa nombre y URL");
+        return;
+      }
+
+      cards.unshift({
+        name,
+        url,
+        description,
+        category,
+        icon
+      });
+
+      saveCards();
+      renderCards();
+
+      closeModal();
+
+      document.getElementById("name").value = "";
+      document.getElementById("url").value = "";
+      document.getElementById("description").value = "";
+      document.getElementById("icon").value = "";
+
+    }
+
+    function deleteCard(index) {
+
+      if(confirm("¿Eliminar tarjeta?")) {
+
+        cards.splice(index, 1);
+
+        saveCards();
+
+        renderCards();
+
+      }
+
+    }
+
+    function filterCategory(category) {
+
+      currentCategory = category;
+
+      renderCards();
+
+    }
+
+    document
+      .getElementById("searchInput")
+      .addEventListener("input", renderCards);
+
+    renderCards();
+
+  </script>
+
+  <style>
+
+    .menu-btn {
+      width: 100%;
+      text-align: left;
+      padding: 14px;
+      border-radius: 18px;
+      background: #18181b;
+      transition: 0.2s;
+    }
+
+    .menu-btn:hover {
+      background: #27272a;
+    }
+
+    .card-stat {
+      background: #18181b;
+      border: 1px solid #27272a;
+      border-radius: 24px;
+      padding: 24px;
+    }
+
+    .input {
+      width: 100%;
+      background: #18181b;
+      border: 1px solid #3f3f46;
+      border-radius: 18px;
+      padding: 14px;
+      outline: none;
+    }
+
+  </style>
+
+</body>
+</html>
