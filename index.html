@@ -1,726 +1,233 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hair & Barber OS | Premium Management System</title>
+    <!-- Fuentes y Iconos -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #d4af37; /* Dorado Premium */
+            --dark: #121212;
+            --dark-soft: #1e1e1e;
+            --light: #fbfbfb;
+            --gray: #e0e0e0;
+            --success: #27ae60;
+            --glass: rgba(255, 255, 255, 0.9);
+        }
 
-<title>HUB CENTRAL</title>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--light); color: var(--dark); line-height: 1.6; }
 
-<script src="https://cdn.tailwindcss.com"></script>
+        /* --- UTILIDADES --- */
+        .glass-card { background: var(--glass); backdrop-filter: blur(10px); border-radius: 12px; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .btn { padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; border: none; transition: 0.3s; text-decoration: none; display: inline-block; }
+        .btn-dark { background: var(--dark); color: white; }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-whatsapp { background: #25d366; color: white; }
 
-<style>
+        /* --- SECCIÓN PÚBLICA --- */
+        header { padding: 20px 5%; display: flex; justify-content: space-between; align-items: center; position: absolute; width: 100%; z-index: 100; }
+        .logo { font-weight: 700; font-size: 1.5rem; letter-spacing: -1px; color: white; }
 
-body{
-    font-family: Arial, sans-serif;
-    background:#09090b;
-    color:white;
-    overflow-x:hidden;
-}
+        .hero { height: 100vh; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=1920'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; color: white; padding: 0 20px; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; }
 
-::-webkit-scrollbar{
-    width:8px;
-}
+        .services { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 40px; }
+        .service-item { padding: 40px; text-align: center; transition: 0.3s; }
+        .service-item:hover { transform: translateY(-10px); }
+        .service-item i { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
 
-::-webkit-scrollbar-thumb{
-    background:#3f3f46;
-    border-radius:10px;
-}
+        /* --- PANEL INTERNO (HIDDEN BY DEFAULT FOR DEMO) --- */
+        #admin-panel { display: none; grid-template-columns: 260px 1fr; min-height: 100vh; background: #f0f2f5; }
+        .sidebar { background: var(--dark); color: white; padding: 30px 20px; }
+        .main-content { padding: 40px; }
+        
+        .agenda-container { margin-top: 30px; }
+        .appointment-card { display: flex; align-items: center; padding: 20px; margin-bottom: 15px; background: white; border-left: 5px solid var(--primary); border-radius: 8px; justify-content: space-between; }
+        .status-badge { padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        .status-pending { background: #fff3cd; color: #856404; }
 
-.sidebar-btn{
-    width:100%;
-    text-align:left;
-    padding:14px;
-    border-radius:18px;
-    background:#18181b;
-    transition:.2s;
-    margin-bottom:10px;
-}
+        /* --- CHATBOT --- */
+        #chatbot { position: fixed; bottom: 20px; right: 20px; width: 300px; z-index: 1000; display: none; }
+        .chat-window { height: 400px; display: flex; flex-direction: column; justify-content: space-between; }
+        .chat-header { background: var(--dark); color: white; padding: 15px; border-radius: 12px 12px 0 0; }
 
-.sidebar-btn:hover{
-    background:#27272a;
-}
-
-.section-card{
-    background:#18181b;
-    border:1px solid #27272a;
-    border-radius:30px;
-    padding:28px;
-}
-
-.tool-card{
-    background:#09090b;
-    border:1px solid #27272a;
-    border-radius:24px;
-    overflow:hidden;
-    transition:.2s;
-}
-
-.tool-card:hover{
-    transform:translateY(-4px);
-    border-color:#52525b;
-}
-
-.input{
-    width:100%;
-    background:#18181b;
-    border:1px solid #3f3f46;
-    border-radius:18px;
-    padding:14px;
-    outline:none;
-    color:white;
-}
-
-.modal{
-    backdrop-filter: blur(8px);
-}
-
-</style>
-
+        /* --- TOGGLE VIEW (FOR PROTOTYPE) --- */
+        .view-switcher { position: fixed; top: 20px; right: 20px; z-index: 9999; }
+    </style>
 </head>
-
 <body>
 
-<div class="flex min-h-screen">
-
-    <!-- SIDEBAR -->
-    <aside class="w-72 bg-zinc-900 border-r border-zinc-800 p-6 hidden md:flex flex-col">
-
-        <div>
-
-            <h1 class="text-3xl font-bold">
-                HUB CENTRAL
-            </h1>
-
-            <p class="text-zinc-400 mt-2 text-sm">
-                Centro de herramientas y proyectos
-            </p>
-
-        </div>
-
-        <div class="mt-10">
-
-            <button onclick="scrollTopPage()" class="sidebar-btn">
-                🏠 Inicio
-            </button>
-
-            <button onclick="openSectionModal()" class="sidebar-btn">
-                ➕ Nueva sección
-            </button>
-
-        </div>
-
-        <div id="sidebarSections" class="mt-6"></div>
-
-        <div class="mt-auto text-zinc-500 text-xs">
-            HUB v3
-        </div>
-
-    </aside>
-
-    <!-- MAIN -->
-    <main class="flex-1 p-6 md:p-10">
-
-        <!-- HEADER -->
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
-
-            <div>
-
-                <h2 class="text-5xl font-bold">
-                    Mi Ecosistema
-                </h2>
-
-                <p class="text-zinc-400 mt-3">
-                    Organiza herramientas, demos, clientes y webs desde un único panel.
-                </p>
-
-            </div>
-
-            <div class="flex gap-3">
-
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Buscar..."
-                    class="input w-64"
-                />
-
-                <button
-                    onclick="openToolModal()"
-                    class="bg-white text-black px-6 py-3 rounded-2xl font-bold hover:scale-105 transition"
-                >
-                    + Añadir herramienta
-                </button>
-
-            </div>
-
-        </div>
-
-        <!-- SECTIONS -->
-        <div id="sectionsContainer" class="space-y-10"></div>
-
-    </main>
-
-</div>
-
-<!-- MODAL SECTION -->
-
-<div
-    id="sectionModal"
-    class="fixed inset-0 hidden items-center justify-center bg-black/70 z-50 modal"
->
-
-    <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 w-[95%] max-w-md">
-
-        <div class="flex items-center justify-between mb-6">
-
-            <h3 class="text-2xl font-bold">
-                Nueva Sección
-            </h3>
-
-            <button onclick="closeSectionModal()">
-                ✕
-            </button>
-
-        </div>
-
-        <div class="space-y-4">
-
-            <input
-                type="text"
-                id="sectionName"
-                placeholder="Nombre sección"
-                class="input"
-            />
-
-            <button
-                onclick="addSection()"
-                class="w-full bg-white text-black py-3 rounded-2xl font-bold"
-            >
-                Crear Sección
-            </button>
-
-        </div>
-
+    <!-- Switcher para el cliente (Solo demo) -->
+    <div class="view-switcher">
+        <button class="btn btn-dark" onclick="switchView()">Ver Panel de Gestión</button>
     </div>
 
-</div>
+    <!-- SECCIÓN WEB PÚBLICA -->
+    <div id="public-web">
+        <header>
+            <div class="logo">LUXE & CUT</div>
+            <nav>
+                <a href="https://wa.me/34600000000" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Reservar</a>
+            </nav>
+        </header>
 
-<!-- MODAL TOOL -->
-
-<div
-    id="toolModal"
-    class="fixed inset-0 hidden items-center justify-center bg-black/70 z-50 modal"
->
-
-    <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 w-[95%] max-w-xl">
-
-        <div class="flex items-center justify-between mb-6">
-
-            <h3 class="text-2xl font-bold">
-                Añadir Herramienta
-            </h3>
-
-            <button onclick="closeToolModal()">
-                ✕
-            </button>
-
-        </div>
-
-        <div class="space-y-4">
-
-            <input
-                type="text"
-                id="toolName"
-                placeholder="Nombre"
-                class="input"
-            />
-
-            <input
-                type="text"
-                id="toolUrl"
-                placeholder="URL"
-                class="input"
-            />
-
-            <textarea
-                id="toolDescription"
-                placeholder="Descripción"
-                class="input h-28 resize-none"
-            ></textarea>
-
-            <select
-                id="toolSection"
-                class="input"
-            ></select>
-
-            <input
-                type="text"
-                id="toolIcon"
-                placeholder="Emoji/Icono"
-                class="input"
-            />
-
-            <input
-                type="file"
-                id="toolImage"
-                accept="image/*"
-                class="input"
-            />
-
-            <button
-                onclick="addTool()"
-                class="w-full bg-white text-black py-3 rounded-2xl font-bold"
-            >
-                Guardar Herramienta
-            </button>
-
-        </div>
-
-    </div>
-
-</div>
-
-<script>
-
-let sections = JSON.parse(
-    localStorage.getItem("hub_sections")
-) || [
-
-    {
-        id: Date.now(),
-        name: "Herramientas IA",
-        tools: []
-    },
-
-    {
-        id: Date.now()+1,
-        name: "Mis Webs",
-        tools: []
-    }
-
-];
-
-function saveData(){
-
-    localStorage.setItem(
-        "hub_sections",
-        JSON.stringify(sections)
-    );
-
-}
-
-function renderSidebar(){
-
-    const sidebar =
-        document.getElementById("sidebarSections");
-
-    sidebar.innerHTML = "";
-
-    sections.forEach(section=>{
-
-        sidebar.innerHTML += `
-
-            <button
-                onclick="scrollToSection('${section.id}')"
-                class="sidebar-btn"
-            >
-                📁 ${section.name}
-            </button>
-
-        `;
-
-    });
-
-}
-
-function renderSectionOptions(){
-
-    const select =
-        document.getElementById("toolSection");
-
-    select.innerHTML = "";
-
-    sections.forEach(section=>{
-
-        select.innerHTML += `
-            <option value="${section.id}">
-                ${section.name}
-            </option>
-        `;
-
-    });
-
-}
-
-function renderSections(){
-
-    const container =
-        document.getElementById("sectionsContainer");
-
-    const search =
-        document
-            .getElementById("searchInput")
-            .value
-            .toLowerCase();
-
-    container.innerHTML = "";
-
-    sections.forEach(section=>{
-
-        let filteredTools =
-            section.tools.filter(tool=>{
-
-                return(
-                    tool.name.toLowerCase().includes(search)
-                    ||
-                    tool.description.toLowerCase().includes(search)
-                );
-
-            });
-
-        container.innerHTML += `
-
-            <section
-                id="section-${section.id}"
-                class="section-card"
-            >
-
-                <div class="flex items-center justify-between mb-8">
-
-                    <div>
-
-                        <h2 class="text-3xl font-bold">
-                            ${section.name}
-                        </h2>
-
-                        <p class="text-zinc-400 mt-2">
-                            ${filteredTools.length} herramientas
-                        </p>
-
-                    </div>
-
-                    <button
-                        onclick="deleteSection(${section.id})"
-                        class="bg-red-500/20 text-red-400 px-4 py-2 rounded-2xl"
-                    >
-                        Eliminar
-                    </button>
-
+        <section class="hero">
+            <div data-aos="fade-up">
+                <h1>ESTILO QUE DEFINE</h1>
+                <p>La experiencia definitiva en barbería y peluquería premium.</p>
+                <div style="margin-top: 30px;">
+                    <button class="btn btn-primary" onclick="alert('Abriendo Agenda...')">RESERVAR CITA</button>
+                    <button class="btn btn-dark" style="margin-left: 10px;">VER SERVICIOS</button>
                 </div>
+            </div>
+        </section>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <section class="services">
+            <h2 style="text-align: center; font-size: 2.5rem;">Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="glass-card service-item">
+                    <i class="fas fa-cut"></i>
+                    <h3>Corte de Autor</h3>
+                    <p>Lavado, asesoramiento y acabado premium.</p>
+                    <h4 style="margin-top:15px; color: var(--primary);">25€</h4>
+                </div>
+                <div class="glass-card service-item">
+                    <i class="fas fa-razor"></i>
+                    <h3>Afeitado Ritual</h3>
+                    <p>Toalla caliente, aceites esenciales y navaja.</p>
+                    <h4 style="margin-top:15px; color: var(--primary);">20€</h4>
+                </div>
+                <div class="glass-card service-item">
+                    <i class="fas fa-paint-brush"></i>
+                    <h3>Color & Estilo</h3>
+                    <p>Tintes orgánicos y matices personalizados.</p>
+                    <h4 style="margin-top:15px; color: var(--primary);">45€</h4>
+                </div>
+            </div>
+        </section>
+    </div>
 
-                    ${filteredTools.map((tool,index)=>`
+    <!-- PANEL DE GESTIÓN INTERNO -->
+    <div id="admin-panel">
+        <aside class="sidebar">
+            <h2 style="color: var(--primary); margin-bottom: 40px;">HAIR OS</h2>
+            <nav>
+                <p style="opacity: 0.5; font-size: 0.8rem; text-transform: uppercase;">Menú</p>
+                <div style="margin-top: 20px;">
+                    <a href="#" style="color: white; text-decoration: none; display: block; padding: 10px 0;"><i class="fas fa-th-large"></i> Dashboard</a>
+                    <a href="#" style="color: var(--primary); text-decoration: none; display: block; padding: 10px 0;"><i class="fas fa-calendar-alt"></i> Agenda</a>
+                    <a href="#" style="color: white; text-decoration: none; display: block; padding: 10px 0;"><i class="fas fa-users"></i> Clientes</a>
+                    <a href="#" style="color: white; text-decoration: none; display: block; padding: 10px 0;"><i class="fas fa-cog"></i> Ajustes</a>
+                </div>
+            </nav>
+        </aside>
 
-                        <div class="tool-card">
+        <main class="main-content">
+            <header style="display: flex; justify-content: space-between; position: relative;">
+                <div>
+                    <h1>Hola, Alejandro</h1>
+                    <p>Tienes 8 citas para hoy</p>
+                </div>
+                <button class="btn btn-primary">+ Nueva Cita</button>
+            </header>
 
-                            <div class="h-52 bg-zinc-800 overflow-hidden">
-
-                                <img
-                                    src="${tool.image}"
-                                    class="w-full h-full object-cover"
-                                />
-
-                            </div>
-
-                            <div class="p-6">
-
-                                <div class="flex items-start justify-between">
-
-                                    <div>
-
-                                        <div class="text-4xl mb-4">
-                                            ${tool.icon}
-                                        </div>
-
-                                        <h3 class="text-2xl font-bold">
-                                            ${tool.name}
-                                        </h3>
-
-                                        <p class="text-zinc-400 mt-3">
-                                            ${tool.description}
-                                        </p>
-
-                                    </div>
-
-                                    <button
-                                        onclick="deleteTool(${section.id},${index})"
-                                        class="text-zinc-500 hover:text-red-500"
-                                    >
-                                        🗑
-                                    </button>
-
-                                </div>
-
-                                <a
-                                    href="${tool.url}"
-                                    target="_blank"
-                                    class="inline-block mt-6 bg-white text-black px-5 py-3 rounded-2xl font-bold hover:scale-105 transition"
-                                >
-                                    Abrir
-                                </a>
-
-                            </div>
-
+            <div class="agenda-container">
+                <h3>Agenda - Jueves, 7 Mayo</h3>
+                
+                <!-- Cita 1 -->
+                <div class="appointment-card glass-card">
+                    <div style="display: flex; align-items: center;">
+                        <div style="font-weight: 700; font-size: 1.2rem; margin-right: 25px;">10:00</div>
+                        <div>
+                            <div style="font-weight: 600;">Carlos Martínez</div>
+                            <div style="font-size: 0.8rem; color: #666;">Corte degradado (Skin Fade)</div>
                         </div>
-
-                    `).join("")}
-
+                    </div>
+                    <div>
+                        <span class="status-badge status-pending">Pendiente</span>
+                        <button class="btn btn-whatsapp" onclick="sendWhatsApp('34600000000', 'Carlos')" style="padding: 5px 10px; font-size: 0.8rem; margin-left: 10px;">
+                            <i class="fab fa-whatsapp"></i> Recordar
+                        </button>
+                    </div>
                 </div>
 
-            </section>
-
-        `;
-
-    });
-
-}
-
-function openSectionModal(){
-
-    document
-        .getElementById("sectionModal")
-        .classList.remove("hidden");
-
-    document
-        .getElementById("sectionModal")
-        .classList.add("flex");
-
-}
-
-function closeSectionModal(){
-
-    document
-        .getElementById("sectionModal")
-        .classList.add("hidden");
-
-}
-
-function addSection(){
-
-    const name =
-        document.getElementById("sectionName").value;
-
-    if(!name) return;
-
-    sections.push({
-
-        id: Date.now(),
-        name,
-        tools: []
-
-    });
-
-    saveData();
-
-    renderSidebar();
-
-    renderSectionOptions();
-
-    renderSections();
-
-    closeSectionModal();
-
-    document.getElementById("sectionName").value="";
-
-}
-
-function deleteSection(id){
-
-    if(!confirm("Eliminar sección completa?")) return;
-
-    sections =
-        sections.filter(s=>s.id!==id);
-
-    saveData();
-
-    renderSidebar();
-
-    renderSectionOptions();
-
-    renderSections();
-
-}
-
-function openToolModal(){
-
-    document
-        .getElementById("toolModal")
-        .classList.remove("hidden");
-
-    document
-        .getElementById("toolModal")
-        .classList.add("flex");
-
-}
-
-function closeToolModal(){
-
-    document
-        .getElementById("toolModal")
-        .classList.add("hidden");
-
-}
-
-function addTool(){
-
-    const name =
-        document.getElementById("toolName").value;
-
-    const url =
-        document.getElementById("toolUrl").value;
-
-    const description =
-        document.getElementById("toolDescription").value;
-
-    const sectionId =
-        Number(
-            document.getElementById("toolSection").value
-        );
-
-    const icon =
-        document.getElementById("toolIcon").value || "🚀";
-
-    const imageInput =
-        document.getElementById("toolImage");
-
-    if(!name || !url){
-
-        alert("Completa nombre y URL");
-
-        return;
-
-    }
-
-    const file =
-        imageInput.files[0];
-
-    if(file){
-
-        const reader = new FileReader();
-
-        reader.onload = function(e){
-
-            saveTool(
-                name,
-                url,
-                description,
-                sectionId,
-                icon,
-                e.target.result
-            );
-
-        };
-
-        reader.readAsDataURL(file);
-
-    }else{
-
-        saveTool(
-            name,
-            url,
-            description,
-            sectionId,
-            icon,
-            "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"
-        );
-
-    }
-
-}
-
-function saveTool(
-    name,
-    url,
-    description,
-    sectionId,
-    icon,
-    image
-){
-
-    const section =
-        sections.find(
-            s=>s.id===sectionId
-        );
-
-    section.tools.unshift({
-
-        name,
-        url,
-        description,
-        icon,
-        image
-
-    });
-
-    saveData();
-
-    renderSections();
-
-    closeToolModal();
-
-    document.getElementById("toolName").value="";
-    document.getElementById("toolUrl").value="";
-    document.getElementById("toolDescription").value="";
-    document.getElementById("toolIcon").value="";
-    document.getElementById("toolImage").value="";
-
-}
-
-function deleteTool(sectionId,index){
-
-    if(!confirm("Eliminar herramienta?")) return;
-
-    const section =
-        sections.find(
-            s=>s.id===sectionId
-        );
-
-    section.tools.splice(index,1);
-
-    saveData();
-
-    renderSections();
-
-}
-
-function scrollToSection(id){
-
-    document
-        .getElementById(`section-${id}`)
-        .scrollIntoView({
-
-            behavior:"smooth"
-
-        });
-
-}
-
-function scrollTopPage(){
-
-    window.scrollTo({
-
-        top:0,
-        behavior:"smooth"
-
-    });
-
-}
-
-document
-    .getElementById("searchInput")
-    .addEventListener(
-        "input",
-        renderSections
-    );
-
-renderSidebar();
-
-renderSectionOptions();
-
-renderSections();
-
-</script>
-
+                <!-- Cita 2 -->
+                <div class="appointment-card glass-card" style="border-left-color: var(--success);">
+                    <div style="display: flex; align-items: center;">
+                        <div style="font-weight: 700; font-size: 1.2rem; margin-right: 25px;">11:00</div>
+                        <div>
+                            <div style="font-weight: 600;">Javier Ruiz</div>
+                            <div style="font-size: 0.8rem; color: #666;">Arreglo de barba completo</div>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="status-badge" style="background: #d4edda; color: #155724;">Confirmado</span>
+                        <button class="btn btn-dark" style="padding: 5px 10px; font-size: 0.8rem; margin-left: 10px;">Atender</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- BOTÓN CHATBOT -->
+    <div id="bot-toggle" onclick="toggleChat()" style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: var(--dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; z-index: 1001; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+        <i class="fas fa-comment-dots" style="font-size: 1.5rem;"></i>
+    </div>
+
+    <!-- VENTANA CHATBOT -->
+    <div id="chatbot" class="glass-card chat-window">
+        <div class="chat-header">
+            <strong>Asistente Virtual</strong>
+            <p style="font-size: 0.7rem; opacity: 0.8;">Online</p>
+        </div>
+        <div id="chat-body" style="padding: 15px; flex-grow: 1; font-size: 0.9rem; overflow-y: auto;">
+            <p style="background: #eee; padding: 10px; border-radius: 8px; margin-bottom: 10px;">¡Hola! Soy el asistente de Luxe & Cut. ¿En qué puedo ayudarte?</p>
+            <button onclick="botReply('precios')" class="btn" style="width: 100%; border: 1px solid var(--gray); margin-bottom: 5px; font-size: 0.8rem;">Ver Precios</button>
+            <button onclick="botReply('horario')" class="btn" style="width: 100%; border: 1px solid var(--gray); margin-bottom: 5px; font-size: 0.8rem;">Horarios</button>
+        </div>
+    </div>
+
+    <script>
+        function switchView() {
+            const web = document.getElementById('public-web');
+            const panel = document.getElementById('admin-panel');
+            const btn = document.querySelector('.view-switcher button');
+
+            if (web.style.display === 'none') {
+                web.style.display = 'block';
+                panel.style.display = 'none';
+                btn.innerText = 'Ver Panel de Gestión';
+            } else {
+                web.style.display = 'none';
+                panel.style.display = 'grid';
+                btn.innerText = 'Ver Web Pública';
+            }
+        }
+
+        function toggleChat() {
+            const chat = document.getElementById('chatbot');
+            chat.style.display = chat.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function botReply(type) {
+            const body = document.getElementById('chat-body');
+            let msg = "";
+            if(type === 'precios') msg = "Cortes desde 18€. Barba 12€. Pack completo 28€.";
+            if(type === 'horario') msg = "Lunes a Viernes: 10:00 - 20:00. Sábados: 09:00 - 14:00.";
+            
+            body.innerHTML += `<p style="background: var(--dark); color: white; padding: 10px; border-radius: 8px; margin-top: 10px;">${msg}</p>`;
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function sendWhatsApp(phone, name) {
+            const text = encodeURIComponent(`Hola ${name}, te recordamos tu cita hoy en Luxe & Cut. ¡Te esperamos!`);
+            window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+        }
+    </script>
 </body>
 </html>
