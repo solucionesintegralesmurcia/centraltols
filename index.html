@@ -15,6 +15,7 @@
     --accent: #6c63ff;
     --accent2: #ff6584;
     --accent3: #43e97b;
+    --star: #f7c948;
     --text: #e8e8f0;
     --text2: #8888aa;
     --radius: 16px;
@@ -31,14 +32,11 @@
     overflow-x: hidden;
   }
 
-  /* FONDO ANIMADO */
   body::before {
     content: '';
     position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
     background: radial-gradient(ellipse at 20% 20%, rgba(108,99,255,0.08) 0%, transparent 50%),
                 radial-gradient(ellipse at 80% 80%, rgba(255,101,132,0.06) 0%, transparent 50%),
                 radial-gradient(ellipse at 50% 50%, rgba(67,233,123,0.04) 0%, transparent 60%);
@@ -52,15 +50,11 @@
     100% { transform: rotate(3deg) scale(1.05); }
   }
 
-  /* ===== PANTALLA DE LOGIN ===== */
+  /* ===== LOGIN ===== */
   #login-screen {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-    padding: 20px;
+    position: fixed; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 100; padding: 20px;
   }
 
   .login-card {
@@ -68,12 +62,10 @@
     border: 1px solid var(--border);
     border-radius: 24px;
     padding: 48px 40px;
-    width: 100%;
-    max-width: 420px;
+    width: 100%; max-width: 420px;
     box-shadow: var(--shadow), 0 0 0 1px rgba(108,99,255,0.1);
     animation: slideUp 0.5s cubic-bezier(0.16,1,0.3,1);
-    position: relative;
-    z-index: 1;
+    position: relative; z-index: 1;
   }
 
   @keyframes slideUp {
@@ -81,671 +73,351 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .login-logo {
-    text-align: center;
-    margin-bottom: 32px;
-  }
-
+  .login-logo { text-align: center; margin-bottom: 32px; }
   .login-logo .icon {
-    width: 64px;
-    height: 64px;
+    width: 72px; height: 72px;
     background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 18px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 28px;
-    margin-bottom: 16px;
+    border-radius: 20px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 32px; margin-bottom: 16px;
     box-shadow: 0 8px 24px rgba(108,99,255,0.4);
   }
-
   .login-logo h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: 26px;
-    font-weight: 800;
+    font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800;
     background: linear-gradient(135deg, #fff, var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
-
-  .login-logo p {
-    color: var(--text2);
-    font-size: 13px;
-    margin-top: 4px;
-  }
+  .login-logo p { color: var(--text2); font-size: 13px; margin-top: 4px; }
 
   .login-tabs {
-    display: flex;
-    background: var(--bg);
-    border-radius: 12px;
-    padding: 4px;
-    margin-bottom: 28px;
+    display: flex; background: var(--bg);
+    border-radius: 12px; padding: 4px; margin-bottom: 28px;
   }
-
   .login-tab {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    background: transparent;
-    color: var(--text2);
-    border-radius: 9px;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.2s;
+    flex: 1; padding: 10px; border: none; background: transparent;
+    color: var(--text2); border-radius: 9px; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; transition: all 0.2s;
   }
+  .login-tab.active { background: var(--accent); color: white; box-shadow: 0 4px 12px rgba(108,99,255,0.4); }
 
-  .login-tab.active {
-    background: var(--accent);
-    color: white;
-    box-shadow: 0 4px 12px rgba(108,99,255,0.4);
-  }
-
-  .form-group {
-    margin-bottom: 16px;
-  }
-
-  .form-group label {
-    display: block;
-    font-size: 13px;
-    color: var(--text2);
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 13px; color: var(--text2); margin-bottom: 8px; font-weight: 500; }
   .form-group input {
-    width: 100%;
-    padding: 14px 16px;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    transition: all 0.2s;
-    outline: none;
+    width: 100%; padding: 14px 16px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 12px; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 15px;
+    transition: all 0.2s; outline: none;
   }
-
-  .form-group input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
-  }
+  .form-group input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(108,99,255,0.15); }
 
   .btn-primary {
-    width: 100%;
-    padding: 15px;
+    width: 100%; padding: 15px;
     background: linear-gradient(135deg, var(--accent), #8b5cf6);
-    border: none;
-    border-radius: 12px;
-    color: white;
-    font-family: 'Syne', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 8px;
+    border: none; border-radius: 12px; color: white;
+    font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; margin-top: 8px;
     box-shadow: 0 4px 16px rgba(108,99,255,0.4);
   }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(108,99,255,0.5);
-  }
-
-  .btn-primary:active { transform: translateY(0); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(108,99,255,0.5); }
   .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
   .msg-error {
-    background: rgba(255,101,132,0.1);
-    border: 1px solid rgba(255,101,132,0.3);
-    color: #ff8fa3;
-    padding: 12px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    margin-top: 12px;
-    display: none;
+    background: rgba(255,101,132,0.1); border: 1px solid rgba(255,101,132,0.3);
+    color: #ff8fa3; padding: 12px 16px; border-radius: 10px;
+    font-size: 13px; margin-top: 12px; display: none;
   }
-
   .msg-success {
-    background: rgba(67,233,123,0.1);
-    border: 1px solid rgba(67,233,123,0.3);
-    color: #43e97b;
-    padding: 12px 16px;
-    border-radius: 10px;
-    font-size: 13px;
-    margin-top: 12px;
-    display: none;
+    background: rgba(67,233,123,0.1); border: 1px solid rgba(67,233,123,0.3);
+    color: #43e97b; padding: 12px 16px; border-radius: 10px;
+    font-size: 13px; margin-top: 12px; display: none;
   }
 
-  /* ===== APP PRINCIPAL ===== */
-  #app {
-    display: none;
-    min-height: 100vh;
-    position: relative;
-    z-index: 1;
-  }
+  /* ===== APP ===== */
+  #app { display: none; min-height: 100vh; position: relative; z-index: 1; }
 
   /* TOPBAR */
   .topbar {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: rgba(10,10,15,0.85);
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(10,10,15,0.9);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
-    padding: 0 24px;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding: 0 24px; height: 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
   }
 
   .topbar-logo {
-    font-family: 'Syne', sans-serif;
-    font-size: 20px;
-    font-weight: 800;
+    font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800;
     background: linear-gradient(135deg, #fff, var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    display: flex; align-items: center; gap: 10px;
+    white-space: nowrap;
   }
-
   .topbar-logo span { font-size: 22px; -webkit-text-fill-color: unset; }
 
-  .topbar-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+  /* BUSCADOR RÁPIDO EN TOPBAR */
+  .topbar-search {
+    flex: 1; max-width: 360px;
+    position: relative;
   }
+  .topbar-search input {
+    width: 100%; padding: 10px 16px 10px 38px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    outline: none; transition: all 0.2s;
+  }
+  .topbar-search input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(108,99,255,0.15); }
+  .topbar-search .si { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 15px; color: var(--text2); pointer-events: none; }
+
+  .topbar-right { display: flex; align-items: center; gap: 8px; }
+
+  /* TOGGLE VISTA */
+  .view-toggle {
+    display: flex; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
+  }
+  .view-btn {
+    padding: 8px 12px; border: none; background: transparent;
+    color: var(--text2); cursor: pointer; font-size: 16px; transition: all 0.2s;
+  }
+  .view-btn.active { background: var(--accent); color: white; }
 
   .user-badge {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 6px 12px;
-    font-size: 13px;
-    color: var(--text2);
+    display: flex; align-items: center; gap: 8px;
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 10px; padding: 6px 12px;
+    font-size: 13px; color: var(--text2);
   }
-
   .user-badge .dot {
-    width: 8px;
-    height: 8px;
-    background: var(--accent3);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
+    width: 8px; height: 8px; background: var(--accent3);
+    border-radius: 50%; animation: pulse 2s infinite; flex-shrink: 0;
   }
+  .user-email { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
 
   .btn-logout {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text2);
-    padding: 8px 14px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 13px;
-    font-family: 'DM Sans', sans-serif;
-    transition: all 0.2s;
+    background: transparent; border: 1px solid var(--border);
+    color: var(--text2); padding: 8px 14px; border-radius: 10px;
+    cursor: pointer; font-size: 13px; font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+    white-space: nowrap;
   }
-
-  .btn-logout:hover {
-    border-color: var(--accent2);
-    color: var(--accent2);
-  }
+  .btn-logout:hover { border-color: var(--accent2); color: var(--accent2); }
 
   /* MAIN */
-  .main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 32px 24px;
-  }
+  .main { max-width: 1300px; margin: 0 auto; padding: 28px 24px; }
 
   /* STATS */
   .stats-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 16px;
-    margin-bottom: 32px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px; margin-bottom: 28px;
   }
-
   .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 18px 20px;
+    display: flex; align-items: center; gap: 14px;
     animation: fadeIn 0.4s ease both;
   }
-
   .stat-icon {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
+    width: 42px; height: 42px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
   }
-
-  .stat-info h3 {
-    font-family: 'Syne', sans-serif;
-    font-size: 26px;
-    font-weight: 800;
-    line-height: 1;
-  }
-
-  .stat-info p {
-    font-size: 12px;
-    color: var(--text2);
-    margin-top: 4px;
-  }
+  .stat-info h3 { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; line-height: 1; }
+  .stat-info p { font-size: 12px; color: var(--text2); margin-top: 4px; }
 
   /* CONTROLES */
   .controls {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 28px;
-    flex-wrap: wrap;
+    display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center;
   }
-
-  .search-box {
-    flex: 1;
-    min-width: 200px;
-    position: relative;
-  }
-
-  .search-box input {
-    width: 100%;
-    padding: 12px 16px 12px 42px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    outline: none;
-    transition: all 0.2s;
-  }
-
-  .search-box input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(108,99,255,0.15);
-  }
-
-  .search-box .search-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--text2);
-    font-size: 16px;
-  }
-
   .filter-select {
-    padding: 12px 16px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    outline: none;
-    cursor: pointer;
-    min-width: 160px;
+    padding: 10px 14px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; color: var(--text); font-family: 'DM Sans', sans-serif;
+    font-size: 14px; outline: none; cursor: pointer;
   }
-
   .btn-add {
-    padding: 12px 20px;
+    padding: 10px 18px;
     background: linear-gradient(135deg, var(--accent), #8b5cf6);
-    border: none;
-    border-radius: 12px;
-    color: white;
-    font-family: 'Syne', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s;
-    white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(108,99,255,0.3);
+    border: none; border-radius: 12px; color: white;
+    font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+    cursor: pointer; display: flex; align-items: center; gap: 8px;
+    transition: all 0.2s; white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(108,99,255,0.3); margin-left: auto;
   }
-
   .btn-add:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(108,99,255,0.4); }
 
-  /* CATEGORÍAS */
-  .cat-tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 24px;
-    flex-wrap: wrap;
-  }
-
+  /* TABS CATEGORÍAS */
+  .cat-tabs { display: flex; gap: 8px; margin-bottom: 22px; flex-wrap: wrap; }
   .cat-tab {
-    padding: 8px 16px;
-    border-radius: 20px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--text2);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.2s;
+    padding: 7px 16px; border-radius: 20px; border: 1px solid var(--border);
+    background: transparent; color: var(--text2);
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    cursor: pointer; transition: all 0.2s; white-space: nowrap;
   }
+  .cat-tab.active, .cat-tab:hover { background: var(--accent); border-color: var(--accent); color: white; }
+  .cat-tab.fav-tab.active, .cat-tab.fav-tab:hover { background: var(--star); border-color: var(--star); color: #1a1a00; }
 
-  .cat-tab.active, .cat-tab:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: white;
-  }
-
-  /* GRID DE HERRAMIENTAS */
+  /* ===== GRID VIEW ===== */
   .tools-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
   }
 
   .tool-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px;
-    cursor: pointer;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 22px;
     transition: all 0.25s cubic-bezier(0.16,1,0.3,1);
     animation: fadeIn 0.4s ease both;
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    display: block;
+    position: relative; overflow: hidden;
+    cursor: pointer;
   }
-
   .tool-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: var(--card-color, var(--accent));
-    opacity: 0;
-    transition: opacity 0.2s;
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--card-color, var(--accent)); opacity: 0; transition: opacity 0.2s;
   }
-
-  .tool-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--card-color, var(--accent));
-    box-shadow: 0 12px 32px rgba(0,0,0,0.3);
-  }
-
+  .tool-card:hover { transform: translateY(-4px); border-color: var(--card-color, var(--accent)); box-shadow: 0 12px 32px rgba(0,0,0,0.3); }
   .tool-card:hover::before { opacity: 1; }
 
-  .tool-card-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    margin-bottom: 16px;
-  }
-
+  .tool-card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
   .tool-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
+    width: 50px; height: 50px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; background: var(--surface2); border: 1px solid var(--border);
+    flex-shrink: 0;
   }
+  .tool-card-btns { display: flex; gap: 5px; opacity: 0; transition: opacity 0.2s; }
+  .tool-card:hover .tool-card-btns { opacity: 1; }
 
-  .tool-actions {
-    display: flex;
-    gap: 6px;
-    opacity: 0;
-    transition: opacity 0.2s;
+  .tc-btn {
+    width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface2); color: var(--text2); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; transition: all 0.15s;
   }
+  .tc-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
+  .tc-btn.del:hover { background: var(--accent2); border-color: var(--accent2); }
+  .tc-btn.fav-on { color: var(--star); border-color: var(--star); background: rgba(247,201,72,0.1); opacity: 1 !important; }
 
-  .tool-card:hover .tool-actions { opacity: 1; }
-
-  .tool-action-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: var(--surface2);
-    color: var(--text2);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    transition: all 0.2s;
-  }
-
-  .tool-action-btn:hover { background: var(--accent); border-color: var(--accent); color: white; }
-  .tool-action-btn.delete:hover { background: var(--accent2); border-color: var(--accent2); }
-
-  .tool-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-    margin-bottom: 6px;
-    color: var(--text);
-  }
-
-  .tool-desc {
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.5;
-    margin-bottom: 16px;
-  }
-
-  .tool-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
+  .tool-name { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 5px; }
+  .tool-desc { font-size: 13px; color: var(--text2); line-height: 1.5; margin-bottom: 14px; min-height: 38px; }
+  .tool-footer { display: flex; align-items: center; justify-content: space-between; }
   .tool-cat {
-    font-size: 11px;
-    padding: 4px 10px;
-    border-radius: 20px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text2);
-    font-weight: 500;
+    font-size: 11px; padding: 3px 10px; border-radius: 20px;
+    background: var(--surface2); border: 1px solid var(--border); color: var(--text2);
   }
+  .tool-open { font-size: 12px; color: var(--accent); }
 
-  .tool-link {
-    font-size: 12px;
-    color: var(--accent);
-    display: flex;
-    align-items: center;
-    gap: 4px;
+  /* ===== LISTA VIEW ===== */
+  .tools-list { display: flex; flex-direction: column; gap: 8px; }
+  .tool-row {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 18px;
+    display: flex; align-items: center; gap: 14px;
+    transition: all 0.2s; cursor: pointer;
+    animation: fadeIn 0.3s ease both;
   }
+  .tool-row:hover { border-color: var(--card-color, var(--accent)); transform: translateX(4px); }
+  .tool-row .row-icon { font-size: 22px; width: 36px; text-align: center; flex-shrink: 0; }
+  .tool-row .row-name { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; min-width: 160px; }
+  .tool-row .row-desc { font-size: 13px; color: var(--text2); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tool-row .row-cat { font-size: 11px; padding: 3px 10px; border-radius: 20px; background: var(--surface2); border: 1px solid var(--border); color: var(--text2); white-space: nowrap; }
+  .tool-row .row-btns { display: flex; gap: 5px; flex-shrink: 0; }
 
-  /* EMPTY STATE */
-  .empty-state {
-    grid-column: 1/-1;
-    text-align: center;
-    padding: 80px 20px;
-  }
-
-  .empty-state .empty-icon { font-size: 64px; margin-bottom: 16px; }
-  .empty-state h3 { font-family: 'Syne', sans-serif; font-size: 22px; margin-bottom: 8px; }
+  /* EMPTY */
+  .empty-state { grid-column: 1/-1; text-align: center; padding: 80px 20px; }
+  .empty-state .ei { font-size: 60px; margin-bottom: 16px; }
+  .empty-state h3 { font-family: 'Syne', sans-serif; font-size: 20px; margin-bottom: 8px; }
   .empty-state p { color: var(--text2); font-size: 14px; }
 
   /* MODAL */
   .modal-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(8px);
-    z-index: 200;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
+    position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px); z-index: 200;
+    display: none; align-items: center; justify-content: center; padding: 20px;
   }
-
   .modal-overlay.open { display: flex; }
-
   .modal {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 36px;
-    width: 100%;
-    max-width: 500px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 24px; padding: 36px; width: 100%; max-width: 500px;
     animation: slideUp 0.3s cubic-bezier(0.16,1,0.3,1);
-    max-height: 90vh;
-    overflow-y: auto;
+    max-height: 90vh; overflow-y: auto;
   }
-
-  .modal h2 {
-    font-family: 'Syne', sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    margin-bottom: 24px;
-  }
-
+  .modal h2 { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 24px; }
   .modal .form-group { margin-bottom: 16px; }
 
-  .icon-picker {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 8px;
-  }
-
+  .icon-picker { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
   .icon-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 10px;
-    border: 2px solid var(--border);
-    background: var(--bg);
-    font-size: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
+    width: 42px; height: 42px; border-radius: 10px; border: 2px solid var(--border);
+    background: var(--bg); font-size: 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: all 0.15s;
   }
-
   .icon-btn:hover, .icon-btn.selected { border-color: var(--accent); background: rgba(108,99,255,0.1); }
 
-  .color-picker {
-    display: flex;
-    gap: 8px;
-    margin-top: 8px;
-    flex-wrap: wrap;
-  }
-
-  .color-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    cursor: pointer;
-    transition: all 0.15s;
-  }
-
+  .color-picker { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .color-btn { width: 34px; height: 34px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; transition: all 0.15s; }
   .color-btn.selected { border-color: white; transform: scale(1.2); }
 
-  .modal-btns {
-    display: flex;
-    gap: 12px;
-    margin-top: 24px;
-  }
-
+  .modal-btns { display: flex; gap: 12px; margin-top: 24px; }
   .btn-cancel {
-    flex: 1;
-    padding: 14px;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--text2);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    cursor: pointer;
-    transition: all 0.2s;
+    flex: 1; padding: 14px; background: transparent; border: 1px solid var(--border);
+    border-radius: 12px; color: var(--text2); font-family: 'DM Sans', sans-serif;
+    font-size: 15px; cursor: pointer; transition: all 0.2s;
   }
-
   .btn-cancel:hover { border-color: var(--text2); color: var(--text); }
-
   .btn-save {
-    flex: 2;
-    padding: 14px;
+    flex: 2; padding: 14px;
     background: linear-gradient(135deg, var(--accent), #8b5cf6);
-    border: none;
-    border-radius: 12px;
-    color: white;
-    font-family: 'Syne', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
+    border: none; border-radius: 12px; color: white;
+    font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
   }
-
   .btn-save:hover { transform: translateY(-1px); }
   .btn-save:disabled { opacity: 0.6; cursor: not-allowed; }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
 
-  /* LOADING */
-  .loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 60px;
-    color: var(--text2);
-    gap: 12px;
-  }
-
-  .spinner {
-    width: 24px;
-    height: 24px;
-    border: 2px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
+  .loading { display: flex; align-items: center; justify-content: center; padding: 60px; color: var(--text2); gap: 12px; grid-column: 1/-1; }
+  .spinner { width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* RESPONSIVE */
-  @media (max-width: 600px) {
-    .login-card { padding: 32px 24px; }
-    .topbar { padding: 0 16px; }
-    .main { padding: 20px 16px; }
-    .controls { flex-direction: column; }
-    .modal { padding: 24px; }
+  /* ===== RESPONSIVE MÓVIL ===== */
+  @media (max-width: 768px) {
+    .topbar { padding: 0 14px; gap: 8px; }
+    .topbar-logo { font-size: 16px; }
+    .topbar-logo span { font-size: 18px; }
+    .topbar-search { max-width: 100%; }
+    .user-badge .user-email { display: none; }
+    .btn-logout { padding: 8px 10px; font-size: 12px; }
+    .main { padding: 16px 14px; }
+    .stats-row { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .stat-card { padding: 14px; gap: 10px; }
+    .stat-icon { width: 36px; height: 36px; font-size: 16px; }
+    .stat-info h3 { font-size: 20px; }
+    .controls { gap: 8px; }
+    .tools-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .tool-card { padding: 16px; }
+    .tool-card-btns { opacity: 1; }
+    .tool-name { font-size: 14px; }
+    .tool-desc { font-size: 12px; min-height: unset; }
+    .tool-row .row-desc { display: none; }
+    .login-card { padding: 28px 20px; }
+    .modal { padding: 24px 20px; }
+  }
+
+  @media (max-width: 480px) {
+    .topbar { flex-wrap: wrap; height: auto; padding: 10px 14px; }
+    .topbar-search { order: 3; flex: 1 1 100%; }
+    .stats-row { grid-template-columns: repeat(3, 1fr); }
+    .tools-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 
-<!-- PANTALLA DE LOGIN -->
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">
@@ -753,12 +425,10 @@
       <h1>HUB Central</h1>
       <p>Soluciones Integrales Murcia</p>
     </div>
-
     <div class="login-tabs">
       <button class="login-tab active" onclick="switchTab('login')">Iniciar sesión</button>
       <button class="login-tab" onclick="switchTab('register')">Registrarse</button>
     </div>
-
     <div id="tab-login">
       <div class="form-group">
         <label>Correo electrónico</label>
@@ -771,7 +441,6 @@
       <button class="btn-primary" onclick="doLogin()" id="btn-login">Entrar</button>
       <div class="msg-error" id="login-error"></div>
     </div>
-
     <div id="tab-register" style="display:none">
       <div class="form-group">
         <label>Correo electrónico</label>
@@ -788,16 +457,24 @@
   </div>
 </div>
 
-<!-- APP PRINCIPAL -->
+<!-- APP -->
 <div id="app">
   <header class="topbar">
-    <div class="topbar-logo">
-      <span>🏠</span> HUB Central
+    <div class="topbar-logo"><span>🏠</span> HUB Central</div>
+
+    <div class="topbar-search">
+      <span class="si">🔍</span>
+      <input type="text" id="search-input" placeholder="Buscar herramienta... (/ para enfocar)" oninput="renderTools()">
     </div>
+
     <div class="topbar-right">
+      <div class="view-toggle">
+        <button class="view-btn active" id="btn-grid" onclick="setView('grid')" title="Vista cuadrícula">⊞</button>
+        <button class="view-btn" id="btn-list" onclick="setView('list')" title="Vista lista">☰</button>
+      </div>
       <div class="user-badge">
         <div class="dot"></div>
-        <span id="user-email-display">—</span>
+        <span class="user-email" id="user-email-display">—</span>
       </div>
       <button class="btn-logout" onclick="doLogout()">Salir</button>
     </div>
@@ -805,87 +482,53 @@
 
   <main class="main">
     <!-- STATS -->
-    <div class="stats-row" id="stats-row">
+    <div class="stats-row">
       <div class="stat-card" style="animation-delay:0s">
         <div class="stat-icon" style="background:rgba(108,99,255,0.15)">🔧</div>
-        <div class="stat-info">
-          <h3 id="stat-total">0</h3>
-          <p>Herramientas</p>
-        </div>
+        <div class="stat-info"><h3 id="stat-total">0</h3><p>Herramientas</p></div>
       </div>
       <div class="stat-card" style="animation-delay:0.1s">
-        <div class="stat-icon" style="background:rgba(255,101,132,0.15)">📁</div>
-        <div class="stat-info">
-          <h3 id="stat-cats">0</h3>
-          <p>Categorías</p>
-        </div>
+        <div class="stat-icon" style="background:rgba(247,201,72,0.15)">⭐</div>
+        <div class="stat-info"><h3 id="stat-favs">0</h3><p>Favoritos</p></div>
       </div>
       <div class="stat-card" style="animation-delay:0.2s">
-        <div class="stat-icon" style="background:rgba(67,233,123,0.15)">✅</div>
-        <div class="stat-info">
-          <h3 id="stat-active">0</h3>
-          <p>Activas</p>
-        </div>
+        <div class="stat-icon" style="background:rgba(255,101,132,0.15)">📁</div>
+        <div class="stat-info"><h3 id="stat-cats">0</h3><p>Categorías</p></div>
       </div>
     </div>
 
     <!-- CONTROLES -->
     <div class="controls">
-      <div class="search-box">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="search-input" placeholder="Buscar herramienta..." oninput="renderTools()">
-      </div>
       <select class="filter-select" id="cat-filter" onchange="renderTools()">
         <option value="">Todas las categorías</option>
       </select>
-      <button class="btn-add" onclick="openModal()">
-        ➕ Añadir herramienta
-      </button>
+      <button class="btn-add" onclick="openModal()">➕ Añadir herramienta</button>
     </div>
 
     <!-- TABS CATEGORÍAS -->
     <div class="cat-tabs" id="cat-tabs"></div>
 
-    <!-- GRID -->
-    <div class="tools-grid" id="tools-grid">
-      <div class="loading"><div class="spinner"></div> Cargando...</div>
+    <!-- CONTENIDO -->
+    <div id="tools-container">
+      <div class="tools-grid"><div class="loading"><div class="spinner"></div> Cargando...</div></div>
     </div>
   </main>
 </div>
 
-<!-- MODAL AÑADIR/EDITAR -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modal">
   <div class="modal">
     <h2 id="modal-title">➕ Nueva herramienta</h2>
-
-    <div class="form-group">
-      <label>Nombre *</label>
-      <input type="text" id="f-nombre" placeholder="Ej: Presupuestos Romero">
-    </div>
-    <div class="form-group">
-      <label>Descripción</label>
-      <input type="text" id="f-desc" placeholder="Breve descripción de la herramienta">
-    </div>
-    <div class="form-group">
-      <label>URL de la herramienta</label>
-      <input type="url" id="f-url" placeholder="https://...">
-    </div>
+    <div class="form-group"><label>Nombre *</label><input type="text" id="f-nombre" placeholder="Ej: Presupuestos Romero"></div>
+    <div class="form-group"><label>Descripción</label><input type="text" id="f-desc" placeholder="Breve descripción"></div>
+    <div class="form-group"><label>URL de la herramienta</label><input type="url" id="f-url" placeholder="https://..."></div>
     <div class="form-group">
       <label>Categoría</label>
       <input type="text" id="f-cat" placeholder="Ej: Clientes, Demos, IA..." list="cat-list">
       <datalist id="cat-list"></datalist>
     </div>
-
-    <div class="form-group">
-      <label>Icono</label>
-      <div class="icon-picker" id="icon-picker"></div>
-    </div>
-
-    <div class="form-group">
-      <label>Color</label>
-      <div class="color-picker" id="color-picker"></div>
-    </div>
-
+    <div class="form-group"><label>Icono</label><div class="icon-picker" id="icon-picker"></div></div>
+    <div class="form-group"><label>Color</label><div class="color-picker" id="color-picker"></div></div>
     <div class="modal-btns">
       <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
       <button class="btn-save" onclick="saveHerramienta()" id="btn-save">Guardar</button>
@@ -895,20 +538,20 @@
 </div>
 
 <script>
-// ===== SUPABASE CONFIG =====
 const SUPABASE_URL = 'https://kipbugnbemqevmhcfriq.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtpcGJ1Z25iZW1xZXZtaGNmcmlxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzNjY0ODcsImV4cCI6MjA5Mzk0MjQ4N30.wewOtt7suc1l7CiuTZXlzF3zn_hrG7j7MCny5qYEVEg';
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ===== ESTADO =====
 let allTools = [];
 let editingId = null;
 let selectedIcon = '🔧';
 let selectedColor = '#6c63ff';
 let activeCategory = '';
+let currentView = 'grid';
+let favorites = JSON.parse(localStorage.getItem('hub_favs') || '[]');
 
-const ICONS = ['🔧','📊','💼','🏗️','🧾','📋','🌐','🤖','📱','🛒','🔑','📁','💡','🎯','📈','🏠','⚙️','🔗','📧','🗂️','🧰','🖥️','📌','🚀'];
+const ICONS = ['🔧','📊','💼','🏗️','🧾','📋','🌐','🤖','📱','🛒','🔑','📁','💡','🎯','📈','🏠','⚙️','🔗','📧','🗂️','🧰','🖥️','📌','🚀','🏥','🍔','🔩','📐','💰','🎨'];
 const COLORS = ['#6c63ff','#ff6584','#43e97b','#f7971e','#4facfe','#fa709a','#30cfd0','#a18cd1','#fccb90','#e0c3fc','#96fbc4','#f5576c'];
 
 // ===== AUTH =====
@@ -928,7 +571,7 @@ function switchTab(tab) {
   document.getElementById('tab-login').style.display = tab === 'login' ? 'block' : 'none';
   document.getElementById('tab-register').style.display = tab === 'register' ? 'block' : 'none';
   document.querySelectorAll('.login-tab').forEach((t, i) => {
-    t.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'register'));
+    t.classList.toggle('active', (i===0&&tab==='login')||(i===1&&tab==='register'));
   });
 }
 
@@ -937,20 +580,11 @@ async function doLogin() {
   const pass = document.getElementById('login-pass').value;
   const errEl = document.getElementById('login-error');
   const btn = document.getElementById('btn-login');
-
   errEl.style.display = 'none';
-  btn.disabled = true;
-  btn.textContent = 'Entrando...';
-
+  btn.disabled = true; btn.textContent = 'Entrando...';
   const { error } = await db.auth.signInWithPassword({ email, password: pass });
-
-  btn.disabled = false;
-  btn.textContent = 'Entrar';
-
-  if (error) {
-    errEl.textContent = 'Email o contraseña incorrectos.';
-    errEl.style.display = 'block';
-  }
+  btn.disabled = false; btn.textContent = 'Entrar';
+  if (error) { errEl.textContent = 'Email o contraseña incorrectos.'; errEl.style.display = 'block'; }
 }
 
 async function doRegister() {
@@ -959,32 +593,50 @@ async function doRegister() {
   const errEl = document.getElementById('reg-error');
   const sucEl = document.getElementById('reg-success');
   const btn = document.getElementById('btn-register');
-
-  errEl.style.display = 'none';
-  sucEl.style.display = 'none';
-  btn.disabled = true;
-  btn.textContent = 'Creando cuenta...';
-
+  errEl.style.display = 'none'; sucEl.style.display = 'none';
+  btn.disabled = true; btn.textContent = 'Creando...';
   const { error } = await db.auth.signUp({ email, password: pass });
+  btn.disabled = false; btn.textContent = 'Crear cuenta';
+  if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; }
+  else { sucEl.textContent = '✅ Cuenta creada. Ya puedes iniciar sesión.'; sucEl.style.display = 'block'; setTimeout(() => switchTab('login'), 2000); }
+}
 
-  btn.disabled = false;
-  btn.textContent = 'Crear cuenta';
+async function doLogout() { await db.auth.signOut(); }
 
-  if (error) {
-    errEl.textContent = error.message;
-    errEl.style.display = 'block';
-  } else {
-    sucEl.textContent = '✅ Cuenta creada. Ya puedes iniciar sesión.';
-    sucEl.style.display = 'block';
-    setTimeout(() => switchTab('login'), 2000);
+// ===== VISTA =====
+function setView(v) {
+  currentView = v;
+  document.getElementById('btn-grid').classList.toggle('active', v === 'grid');
+  document.getElementById('btn-list').classList.toggle('active', v === 'list');
+  renderTools();
+}
+
+// ===== FAVORITOS =====
+function isFav(id) { return favorites.includes(id); }
+function toggleFav(id, e) {
+  e.stopPropagation();
+  if (isFav(id)) favorites = favorites.filter(f => f !== id);
+  else favorites.push(id);
+  localStorage.setItem('hub_favs', JSON.stringify(favorites));
+  updateStats();
+  updateCategoryTabs();
+  renderTools();
+}
+
+// ===== BUSCADOR RÁPIDO CON TECLA / =====
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement.tagName !== 'INPUT') {
+    e.preventDefault();
+    document.getElementById('search-input').focus();
   }
-}
+  if (e.key === 'Escape') {
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-input').blur();
+    renderTools();
+  }
+});
 
-async function doLogout() {
-  await db.auth.signOut();
-}
-
-// ===== HERRAMIENTAS =====
+// ===== CARGAR HERRAMIENTAS =====
 async function loadTools() {
   const { data, error } = await db.from('herramientas').select('*').order('created_at', { ascending: false });
   if (error) { console.error(error); return; }
@@ -998,13 +650,11 @@ function updateStats() {
   const cats = [...new Set(allTools.map(t => t.categoria))].filter(Boolean);
   document.getElementById('stat-total').textContent = allTools.length;
   document.getElementById('stat-cats').textContent = cats.length;
-  document.getElementById('stat-active').textContent = allTools.filter(t => t.activa).length;
+  document.getElementById('stat-favs').textContent = favorites.filter(f => allTools.find(t => t.id === f)).length;
 
-  // Actualizar datalist
   const dl = document.getElementById('cat-list');
   dl.innerHTML = cats.map(c => `<option value="${c}">`).join('');
 
-  // Actualizar select filtro
   const sel = document.getElementById('cat-filter');
   const cur = sel.value;
   sel.innerHTML = '<option value="">Todas las categorías</option>' + cats.map(c => `<option value="${c}">${c}</option>`).join('');
@@ -1013,8 +663,10 @@ function updateStats() {
 
 function updateCategoryTabs() {
   const cats = [...new Set(allTools.map(t => t.categoria))].filter(Boolean);
+  const favCount = favorites.filter(f => allTools.find(t => t.id === f)).length;
   const container = document.getElementById('cat-tabs');
-  container.innerHTML = `<button class="cat-tab ${activeCategory===''?'active':''}" onclick="filterCat('')">Todas</button>` +
+  const favBtn = favCount > 0 ? `<button class="cat-tab fav-tab ${activeCategory==='__favs__'?'active':''}" onclick="filterCat('__favs__')">⭐ Favoritos (${favCount})</button>` : '';
+  container.innerHTML = `<button class="cat-tab ${activeCategory===''?'active':''}" onclick="filterCat('')">Todas</button>` + favBtn +
     cats.map(c => `<button class="cat-tab ${activeCategory===c?'active':''}" onclick="filterCat('${c}')">${c}</button>`).join('');
 }
 
@@ -1026,51 +678,67 @@ function filterCat(cat) {
 
 function renderTools() {
   const search = document.getElementById('search-input').value.toLowerCase();
-  const catFilter = document.getElementById('cat-filter').value || activeCategory;
-  const grid = document.getElementById('tools-grid');
+  const catFilter = document.getElementById('cat-filter').value;
+  const container = document.getElementById('tools-container');
 
   let filtered = allTools.filter(t => {
-    const matchSearch = !search || t.nombre.toLowerCase().includes(search) || (t.descripcion||'').toLowerCase().includes(search);
-    const matchCat = !catFilter || t.categoria === catFilter;
+    const matchSearch = !search || t.nombre.toLowerCase().includes(search) || (t.descripcion||'').toLowerCase().includes(search) || (t.categoria||'').toLowerCase().includes(search);
+    const matchCat = activeCategory === '__favs__' ? isFav(t.id) : (!activeCategory && !catFilter) ? true : (catFilter ? t.categoria === catFilter : t.categoria === activeCategory);
     return matchSearch && matchCat;
   });
 
+  // Favoritos primero
+  filtered.sort((a, b) => {
+    if (isFav(a.id) && !isFav(b.id)) return -1;
+    if (!isFav(a.id) && isFav(b.id)) return 1;
+    return 0;
+  });
+
   if (filtered.length === 0) {
-    grid.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-icon">🔍</div>
-        <h3>${allTools.length === 0 ? 'Sin herramientas aún' : 'Sin resultados'}</h3>
-        <p>${allTools.length === 0 ? 'Añade tu primera herramienta con el botón ➕' : 'Prueba con otro término de búsqueda'}</p>
-      </div>`;
+    container.innerHTML = `<div class="tools-grid"><div class="empty-state">
+      <div class="ei">${allTools.length===0?'🔧':'🔍'}</div>
+      <h3>${allTools.length===0?'Sin herramientas aún':'Sin resultados'}</h3>
+      <p>${allTools.length===0?'Añade tu primera herramienta con el botón ➕':'Prueba con otro término de búsqueda'}</p>
+    </div></div>`;
     return;
   }
 
-  grid.innerHTML = filtered.map((t, i) => `
-    <div class="tool-card" style="--card-color:${t.color}; animation-delay:${i*0.05}s">
-      <div class="tool-card-header">
-        <div class="tool-icon">${t.icono}</div>
-        <div class="tool-actions">
-          <button class="tool-action-btn" onclick="event.stopPropagation(); editTool('${t.id}')" title="Editar">✏️</button>
-          <button class="tool-action-btn delete" onclick="event.stopPropagation(); deleteTool('${t.id}')" title="Eliminar">🗑️</button>
-          ${t.url ? `<button class="tool-action-btn" onclick="event.stopPropagation(); window.open('${t.url}','_blank')" title="Abrir">↗️</button>` : ''}
+  if (currentView === 'grid') {
+    container.innerHTML = `<div class="tools-grid">${filtered.map((t, i) => `
+      <div class="tool-card" style="--card-color:${t.color};animation-delay:${i*0.04}s" onclick="openTool('${t.url}')">
+        <div class="tool-card-header">
+          <div class="tool-icon">${t.icono}</div>
+          <div class="tool-card-btns">
+            <button class="tc-btn ${isFav(t.id)?'fav-on':''}" onclick="toggleFav('${t.id}',event)" title="Favorito">⭐</button>
+            <button class="tc-btn" onclick="event.stopPropagation();editTool('${t.id}')" title="Editar">✏️</button>
+            <button class="tc-btn del" onclick="event.stopPropagation();deleteTool('${t.id}')" title="Eliminar">🗑️</button>
+          </div>
         </div>
-      </div>
-      <div class="tool-name">${t.nombre}</div>
-      <div class="tool-desc">${t.descripcion || 'Sin descripción'}</div>
-      <div class="tool-footer">
-        <span class="tool-cat">${t.categoria || 'Sin categoría'}</span>
-        ${t.url ? `<span class="tool-link">🔗 Abrir</span>` : ''}
-      </div>
-    </div>
-  `).join('');
+        <div class="tool-name">${t.nombre}</div>
+        <div class="tool-desc">${t.descripcion||'Sin descripción'}</div>
+        <div class="tool-footer">
+          <span class="tool-cat">${t.categoria||'Sin categoría'}</span>
+          ${t.url?`<span class="tool-open">↗ Abrir</span>`:''}
+        </div>
+      </div>`).join('')}</div>`;
+  } else {
+    container.innerHTML = `<div class="tools-list">${filtered.map((t, i) => `
+      <div class="tool-row" style="--card-color:${t.color};animation-delay:${i*0.03}s" onclick="openTool('${t.url}')">
+        <div class="row-icon">${t.icono}</div>
+        <div class="row-name">${t.nombre}</div>
+        <div class="row-desc">${t.descripcion||''}</div>
+        <span class="row-cat">${t.categoria||'Sin categoría'}</span>
+        <div class="row-btns">
+          <button class="tc-btn ${isFav(t.id)?'fav-on':''}" onclick="toggleFav('${t.id}',event)" title="Favorito">⭐</button>
+          <button class="tc-btn" onclick="event.stopPropagation();editTool('${t.id}')" title="Editar">✏️</button>
+          <button class="tc-btn del" onclick="event.stopPropagation();deleteTool('${t.id}')" title="Eliminar">🗑️</button>
+        </div>
+      </div>`).join('')}</div>`;
+  }
+}
 
-  // Hacer las cards clickeables si tienen URL
-  filtered.forEach(t => {
-    if (t.url) {
-      const cards = grid.querySelectorAll('.tool-card');
-      // ya gestionado con botón
-    }
-  });
+function openTool(url) {
+  if (url) window.open(url, '_blank');
 }
 
 // ===== MODAL =====
@@ -1078,82 +746,54 @@ function openModal(tool = null) {
   editingId = tool ? tool.id : null;
   document.getElementById('modal-title').textContent = tool ? '✏️ Editar herramienta' : '➕ Nueva herramienta';
   document.getElementById('f-nombre').value = tool ? tool.nombre : '';
-  document.getElementById('f-desc').value = tool ? (tool.descripcion || '') : '';
-  document.getElementById('f-url').value = tool ? (tool.url || '') : '';
-  document.getElementById('f-cat').value = tool ? (tool.categoria || '') : '';
+  document.getElementById('f-desc').value = tool ? (tool.descripcion||'') : '';
+  document.getElementById('f-url').value = tool ? (tool.url||'') : '';
+  document.getElementById('f-cat').value = tool ? (tool.categoria||'') : '';
   document.getElementById('modal-error').style.display = 'none';
-
   selectedIcon = tool ? tool.icono : '🔧';
   selectedColor = tool ? tool.color : '#6c63ff';
-
-  renderIconPicker();
-  renderColorPicker();
-
+  renderIconPicker(); renderColorPicker();
   document.getElementById('modal').classList.add('open');
 }
 
-function closeModal() {
-  document.getElementById('modal').classList.remove('open');
-  editingId = null;
-}
+function closeModal() { document.getElementById('modal').classList.remove('open'); editingId = null; }
 
-function editTool(id) {
-  const tool = allTools.find(t => t.id === id);
-  if (tool) openModal(tool);
-}
+function editTool(id) { const t = allTools.find(t => t.id === id); if (t) openModal(t); }
 
 async function deleteTool(id) {
   if (!confirm('¿Eliminar esta herramienta?')) return;
   await db.from('herramientas').delete().eq('id', id);
+  favorites = favorites.filter(f => f !== id);
+  localStorage.setItem('hub_favs', JSON.stringify(favorites));
   await loadTools();
 }
 
 function renderIconPicker() {
   document.getElementById('icon-picker').innerHTML = ICONS.map(icon =>
-    `<button class="icon-btn ${icon===selectedIcon?'selected':''}" onclick="selectIcon('${icon}')">${icon}</button>`
-  ).join('');
+    `<button class="icon-btn ${icon===selectedIcon?'selected':''}" onclick="selectIcon('${icon}')">${icon}</button>`).join('');
 }
-
-function selectIcon(icon) {
-  selectedIcon = icon;
-  renderIconPicker();
-}
+function selectIcon(icon) { selectedIcon = icon; renderIconPicker(); }
 
 function renderColorPicker() {
   document.getElementById('color-picker').innerHTML = COLORS.map(color =>
-    `<button class="color-btn ${color===selectedColor?'selected':''}" style="background:${color}" onclick="selectColor('${color}')"></button>`
-  ).join('');
+    `<button class="color-btn ${color===selectedColor?'selected':''}" style="background:${color}" onclick="selectColor('${color}')"></button>`).join('');
 }
-
-function selectColor(color) {
-  selectedColor = color;
-  renderColorPicker();
-}
+function selectColor(color) { selectedColor = color; renderColorPicker(); }
 
 async function saveHerramienta() {
   const nombre = document.getElementById('f-nombre').value.trim();
   const errEl = document.getElementById('modal-error');
   const btn = document.getElementById('btn-save');
-
-  if (!nombre) {
-    errEl.textContent = 'El nombre es obligatorio.';
-    errEl.style.display = 'block';
-    return;
-  }
-
+  if (!nombre) { errEl.textContent = 'El nombre es obligatorio.'; errEl.style.display = 'block'; return; }
   errEl.style.display = 'none';
-  btn.disabled = true;
-  btn.textContent = 'Guardando...';
-
+  btn.disabled = true; btn.textContent = 'Guardando...';
   const data = {
     nombre,
     descripcion: document.getElementById('f-desc').value.trim(),
     url: document.getElementById('f-url').value.trim(),
     categoria: document.getElementById('f-cat').value.trim() || 'Sin categoría',
-    icono: selectedIcon,
-    color: selectedColor,
+    icono: selectedIcon, color: selectedColor,
   };
-
   let error;
   if (editingId) {
     ({ error } = await db.from('herramientas').update(data).eq('id', editingId));
@@ -1161,23 +801,12 @@ async function saveHerramienta() {
     const { data: { user } } = await db.auth.getUser();
     ({ error } = await db.from('herramientas').insert({ ...data, user_id: user.id }));
   }
-
-  btn.disabled = false;
-  btn.textContent = 'Guardar';
-
-  if (error) {
-    errEl.textContent = 'Error al guardar: ' + error.message;
-    errEl.style.display = 'block';
-  } else {
-    closeModal();
-    await loadTools();
-  }
+  btn.disabled = false; btn.textContent = 'Guardar';
+  if (error) { errEl.textContent = 'Error: ' + error.message; errEl.style.display = 'block'; }
+  else { closeModal(); await loadTools(); }
 }
 
-// Cerrar modal al clickar fuera
-document.getElementById('modal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
+document.getElementById('modal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 </script>
 </body>
 </html>
