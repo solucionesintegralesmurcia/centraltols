@@ -248,7 +248,7 @@ body.presentation-mode .card-actions,.presentation-mode .sec-add,.presentation-m
 <div class="bg-glow"></div>
 
 <!-- LOGIN -->
-<div id="login-screen" style="display:none;">
+<div id="login-screen">
   <div class="login-card">
     <div class="login-logo">
       <div class="icon">🚀</div>
@@ -278,25 +278,8 @@ body.presentation-mode .card-actions,.presentation-mode .sec-add,.presentation-m
   </div>
 </div>
 
-<script>
-window.onload = function () {
-
-  const login = document.getElementById('login-screen');
-  const app = document.getElementById('app');
-
-  if (login) {
-    login.style.display = 'none';
-  }
-
-  if (app) {
-    app.style.display = 'block';
-  }
-
-};
-</script>
-
 <!-- APP -->
-<div id="app">
+<div id="app" style="display:none;">
   <!-- NAVBAR -->
   <nav class="nav">
     <div class="nav-logo">
