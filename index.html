@@ -248,26 +248,52 @@ body.presentation-mode .card-actions,.presentation-mode .sec-add,.presentation-m
 <div class="bg-glow"></div>
 
 <!-- LOGIN -->
-<div id="login-screen">
+<div id="login-screen" style="display:none;">
   <div class="login-card">
     <div class="login-logo">
       <div class="icon">🚀</div>
       <div class="brand">HUB Central<span>Soluciones Integrales Murcia</span></div>
     </div>
+
     <div class="login-title">Bienvenido de nuevo</div>
     <div class="login-sub">Accede a tu panel privado de herramientas</div>
+
     <div class="input-group">
       <label>Correo electrónico</label>
       <input type="email" id="inp-email" placeholder="tu@email.com" autocomplete="email">
     </div>
+
     <div class="input-group">
       <label>Contraseña</label>
       <input type="password" id="inp-pass" placeholder="••••••••" autocomplete="current-password">
     </div>
-    <button class="btn-login" id="btn-login" onclick="doLogin()">Entrar al HUB →</button>
-    <div class="login-err" id="login-err">❌ Email o contraseña incorrectos</div>
+
+    <button class="btn-login" id="btn-login">
+      Entrar al HUB →
+    </button>
+
+    <div class="login-err" id="login-err">
+      ❌ Email o contraseña incorrectos
+    </div>
   </div>
 </div>
+
+<script>
+window.onload = function () {
+
+  const login = document.getElementById('login-screen');
+  const app = document.getElementById('app');
+
+  if (login) {
+    login.style.display = 'none';
+  }
+
+  if (app) {
+    app.style.display = 'block';
+  }
+
+};
+</script>
 
 <!-- APP -->
 <div id="app">
